@@ -62,7 +62,7 @@ const ImageUpload = () => {
           <h2 className="text-sm mx-1 text-center">if the prediction doesn't match it may be because of the background. The model has an ~88% accuracy with
             the Fashion MNIST dataset.
 
-            if you are curious about how the model work then check out my <a >github</a>
+            if you are curious about how the model work then check out my <a href="https://github.com/dkeum/Backend_forClothesIdentifer.git" >github</a>
           </h2> 
         }
        
