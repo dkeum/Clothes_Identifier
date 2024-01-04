@@ -13,7 +13,7 @@ const ImageUpload = () => {
 
     const formData = new FormData(e.target);
     const Upload = async() => {
-      await fetch('http://127.0.0.1:5000/api/predict', {
+      await fetch('https://clothingidentifier-backend.onrender.com//api/predict', {
         method: 'POST',
         body: formData
       }).then(resp => {
