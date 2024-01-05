@@ -74,7 +74,7 @@ const ImageUpload = () => {
           Upload...
         </button>
         <div className="mt-10 text-sm">
-        <p>Your image will go into a CNN using the TINYVGG architecture... <br/> 
+        <p>Your image will go into a simple CNN using the Tiny VGG architecture... <br/> 
            Hopefully the prediction is correct when you click upload </p>
       </div>
 
