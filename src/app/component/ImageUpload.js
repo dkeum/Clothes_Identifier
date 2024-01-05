@@ -54,7 +54,7 @@ const ImageUpload = () => {
         {/* <label htmlFor="image" className="ml-sm-4 font-weight-bold mr-md-4 text-3xl my-5 font-bold">Image :  </label>
           <input onChange={inputHandler}  className="w-[105px]" id="image" name="file" accept="image/*"  type="file" /> */}
         <label
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block text-3xl font-bold text-gray-900 dark:text-white mb-10"
           htmlFor="image"
         >
           Upload an image with a clear background
@@ -73,10 +73,18 @@ const ImageUpload = () => {
         >
           Upload...
         </button>
+        <div className="mt-10 text-sm">
+        <p>Your image will go into a CNN using the TINYVGG architecture... <br/> 
+           Hopefully the prediction is correct when you click upload </p>
+      </div>
+
       </form>
+     
+
+
       <div className="bg-gray-200 w-1/2 h-full flex flex-col justify-center items-center align-middle overflow-hidden">
         {file !== null ? (
-          <img src={file} className="w-2/3" alt="Uploaded" />
+          <img src={file} className="w-2/3 max-w-[400px] max-h-[400px]" alt="Uploaded" />
         ) : (
           <p>Your Image will Load here after upload...</p>
         )}
