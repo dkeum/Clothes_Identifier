@@ -1,44 +1,38 @@
-"use client";
+"use client"
 
 import React, { useState } from "react";
+import Link from 'next/link'
 
 const ImageUpload = () => {
   const [file, setFile] = useState(null);
   const [prediction, setPrediction] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // console.log(e.target.formData.data)
+    setIsLoading(true); // Set loading state to true before fetch
 
     const formData = new FormData(e.target);
-    const Upload = async () => {
-
-
-      await fetch('https://clothingidentifier-backend.onrender.com/api/predict', {
+    try {
+      const res = await fetch('https://clothingidentifier-backend.onrender.com/api/predict', {
         method: 'POST',
         body: formData
-      }).then(async (res) => {
-
-            const data = await res.json()
-            console.log("this is data: ")
-            console.log(data)
-            return data;
-          })
-             .then( (data) => {
-              setPrediction(data.prediction);
-              console.log(data);
-          });
-    };
-
-
-    Upload();
-  }
+      });
+      console.log(res)
+      if (res.ok) {
+        const data = await res.json();
+        setPrediction(data.prediction);
+      } else {
+        console.error('Error fetching data:', res.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false); // Set loading state to false after fetch completes
+    }
+  };
 
   const inputHandler = (event) => {
-    // Placeholder function for getting prediction
-    // Replace this with your actual prediction logic
-
     if (event.target.files && event.target.files[0]) {
       setFile(URL.createObjectURL(event.target.files[0]));
       setPrediction("");
@@ -51,8 +45,6 @@ const ImageUpload = () => {
         onSubmit={handleSubmit}
         className="bg-green-200 w-1/2 h-full flex flex-col justify-center items-center align-middle"
       >
-        {/* <label htmlFor="image" className="ml-sm-4 font-weight-bold mr-md-4 text-3xl my-5 font-bold">Image :  </label>
-          <input onChange={inputHandler}  className="w-[105px]" id="image" name="file" accept="image/*"  type="file" /> */}
         <label
           className="block text-3xl font-bold text-gray-900 dark:text-white mb-10"
           htmlFor="image"
@@ -70,17 +62,15 @@ const ImageUpload = () => {
         <button
           type="submit"
           className="mt-3 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+          disabled={isLoading} // Disable the button while loading
         >
-          Upload...
+          {isLoading ? 'Uploading...' : 'Upload...'}
         </button>
         <div className="mt-10 text-sm">
-        <p>Your image will go into a simple CNN using the Tiny VGG architecture... <br/> 
-           Hopefully the prediction is correct when you click upload </p>
-      </div>
-
+          <p>Your image will go into a simple CNN using the Tiny VGG architecture... <br/> 
+          Hopefully the prediction is correct when you click upload </p>
+        </div>
       </form>
-     
-
 
       <div className="bg-gray-200 w-1/2 h-full flex flex-col justify-center items-center align-middle overflow-hidden">
         {file !== null ? (
@@ -94,9 +84,9 @@ const ImageUpload = () => {
             if the prediction doesn't match it may be because of the background.
             The model has an ~88% accuracy with the Fashion MNIST dataset. if
             you are curious about how the model work then check out my{" "}
-            <a href="https://github.com/dkeum/Backend_forClothesIdentifer.git">
+            <Link className="underline decoration-sky-500" href="https://github.com/dkeum/Backend_forClothesIdentifer.git">
               github
-            </a>
+            </Link>
           </h2>
         )}
       </div>
